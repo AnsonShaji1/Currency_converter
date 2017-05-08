@@ -1,0 +1,171 @@
+{% extends 'base.html'%}
+
+
+{% block nav_content %}
+<div class="navbar">
+	<div class="navbar-inner">
+
+		<ul class="nav pull-right">
+			<li><a href="/logout">Logout</a></li>
+		</ul>
+
+	</div>
+</div>
+{% endblock nav_content %}
+
+
+
+
+{% block form %}
+	<form method="POST" action="" enctype='multipart/form-data' class="form-horizontal" id="post-form">{% csrf_token %}
+		<div class="row">
+			<div class="span0">
+				<div class="control-group">
+					<label class="control-label" for="option1">Currency I Have</label>
+					<div class="controls">
+						<select id="option1">
+							<option>USD</option>
+							<option>AUD</option>
+							<option>BGN</option>
+							<option>BRL</option>
+							<option>CAD</option>
+							<option>CHF</option>
+							<option>CNY</option>
+							<option>CZK</option>
+							<option>DKK</option>
+							<option>GBP</option>
+							<option>HKD</option>
+							<option>HRK</option>
+							<option>HUF</option>
+							<option>IDR</option>
+							<option>ILS</option>
+							<option>INR</option>
+							<option>JPY</option>
+							<option>KRW</option>
+							<option>MXN</option>
+							<option>MYR</option>
+							<option>NOK</option>
+							<option>NZD</option>
+							<option>PHP</option>
+							<option>PLN</option>
+							<option>RON</option>
+							<option>RUB</option>
+							<option>SEK</option>
+							<option>SGD</option>
+							<option>THB</option>
+							<option>TRY</option>
+							<option>ZAR</option>
+							<option>EUR</option>
+							
+						</select>
+
+					</div>
+				</div>
+
+
+				<div class="control-group">
+					<label class="control-label" for="inputAmount">Amount</label>
+					<div class="controls">
+						<input type="text" id="inputAmount" placeholder="Enter amount">
+					</div>
+				</div>
+			
+				<div class="control-group">
+					<label class="control-label" for="option2">Currency I Want</label>
+					<div class="controls">
+						<select id="option2">
+							<option>USD</option>
+							<option>AUD</option>
+							<option>BGN</option>
+							<option>BRL</option>
+							<option>CAD</option>
+							<option>CHF</option>
+							<option>CNY</option>
+							<option>CZK</option>
+							<option>DKK</option>
+							<option>GBP</option>
+							<option>HKD</option>
+							<option>HRK</option>
+							<option>HUF</option>
+							<option>IDR</option>
+							<option>ILS</option>
+							<option>INR</option>
+							<option>JPY</option>
+							<option>KRW</option>
+							<option>MXN</option>
+							<option>MYR</option>
+							<option>NOK</option>
+							<option>NZD</option>
+							<option>PHP</option>
+							<option>PLN</option>
+							<option>RON</option>
+							<option>RUB</option>
+							<option>SEK</option>
+							<option>SGD</option>
+							<option>THB</option>
+							<option>TRY</option>
+							<option>ZAR</option>
+							<option>EUR</option>
+							
+						</select>
+
+					</div>
+				</div>
+
+
+				<div class="control-group">
+					<div class="controls">
+						<button type="submit" class="btn" id="submit_id">Submit</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="span6">
+				<div class="control-group">
+					<label class="control-label">Result</label>
+					<div class="controls">
+						<input type="text" id="inputAmount2">
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+{% endblock form %}
+
+
+
+{% block style1 %}
+<script>
+	$('#post-form').on('submit', function(event){
+		event.preventDefault();
+		//console.log("form submitted!")  // sanity check
+		create_post();
+	});
+
+
+function create_post() {
+	//console.log("create post is working!");
+	var currency1=$('#option1').val();
+	var price=$('#inputAmount').val();
+	var currency2=$('#option2').val();
+
+	$.ajax({
+		type:"POST",
+		url:"/calculations/",
+		data:{
+			'currency1':currency1,
+			'price':price,
+			'currency2':currency2,
+		},
+		dataType: 'json',
+		success:function(data){
+			console.log(data);
+			console.log(data.latest.currency1);
+			$('#inputAmount2').val(data.latest.result);
+
+		}
+	});
+
+};
+</script>
+{% endblock style1 %}

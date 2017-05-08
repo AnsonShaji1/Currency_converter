@@ -1,0 +1,49 @@
+{% extends 'base.html'%}
+
+
+{% block style %}
+<style type="text/css">
+
+	.form-signin {
+	max-width: 300px;
+	padding: 19px 29px 29px;
+	margin: 0 auto 20px;
+	background-color: #fff;
+	border: 1px solid #e5e5e5;
+	-webkit-border-radius: 5px;
+	   -moz-border-radius: 5px;
+	        border-radius: 5px;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	   -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	        box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	}
+</style>
+{% endblock style %}
+
+
+
+
+{% block nav_content %}
+<div class="navbar">
+	<div class="navbar-inner">
+
+		<ul class="nav">
+			<li class="active"><a href="/">Login</a></li>
+			<li><a href="/register">Create Account</a></li>
+		</ul>
+
+	</div>
+</div>
+
+{% endblock nav_content %}
+
+
+
+
+{% block form %}	
+<form action='/' method="POST" enctype='multipart/form-data' class="form-signin">{% csrf_token %}
+	<h3>{{title}}</h3>
+	{{form.as_p}}
+	<button class="btn btn-small btn-primary" type="submit">Login</button>
+</form>
+{% endblock form %}
